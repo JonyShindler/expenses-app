@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'expenses')}" lang="en">
+
+<body>
+
+<h2>Expenses</h2>
+
+<table id="expenses" class="table table-striped">
+    <thead>
+    <tr>
+        <th style="width: 150px;">Date</th>
+        <th style="width: 200px;">Direction</th>
+        <th style="width: 120px">Quantity</th>
+        <th style="width: 120px">Detail</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="expense : ${expenses}">
+        <td th:text="${expense.date}"></td>
+        <td th:text="${expense.direction}"></td>
+        <td th:text="${expense.quantity}"></td>
+        <td th:text="${expense.detail}"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

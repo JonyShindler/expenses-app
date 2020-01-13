@@ -40,4 +40,9 @@
         </plugins>
     </build>
 
+    <scm>
+        <developerConnection>scm:git:git@github.com:JonyShindler/expenses-app.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
 </project>
