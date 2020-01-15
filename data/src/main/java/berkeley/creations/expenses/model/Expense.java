@@ -4,6 +4,8 @@ import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -21,8 +23,13 @@ public class Expense extends BaseEntity{
 
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
+
     private Direction direction;
-//    private Category category;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     private String detail;
 
 }

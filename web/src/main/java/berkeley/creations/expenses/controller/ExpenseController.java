@@ -1,6 +1,8 @@
 package berkeley.creations.expenses.controller;
 
+import berkeley.creations.expenses.model.Category;
 import berkeley.creations.expenses.model.Expense;
+import berkeley.creations.expenses.service.CategoryService;
 import berkeley.creations.expenses.service.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,7 +12,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.thymeleaf.util.StringUtils;
 
 import javax.validation.Valid;
 import java.util.Collection;
@@ -21,10 +22,12 @@ import java.util.Set;
 public class ExpenseController {
 
     private final ExpenseService expenseService;
+    private final CategoryService categoryService;
 
     @Autowired
-    public ExpenseController(ExpenseService expenseService) {
+    public ExpenseController(ExpenseService expenseService, CategoryService categoryService) {
         this.expenseService = expenseService;
+        this.categoryService = categoryService;
     }
 
 
@@ -69,10 +72,9 @@ public class ExpenseController {
         }
     }
 
-//    Used for drop down when adding new pets. So we know all the petypes.
-//    @ModelAttribute("direction")
-//    public Collection<Di> populatePetTypes() {
-//        return petTypeService.findAll();
-//    }
+    @ModelAttribute("categories")
+    public Collection<Category> populateCategories() {
+        return categoryService.findAll();
+    }
 
 }

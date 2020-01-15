@@ -12,6 +12,7 @@
         <th style="width: 150px;">Date</th>
         <th style="width: 200px;">Direction</th>
         <th style="width: 120px">Quantity</th>
+        <th style="width: 120px">Category</th>
         <th style="width: 120px">Detail</th>
         <th style="width: 120px">View</th>
     </tr>
@@ -21,6 +22,7 @@
         <td th:text="${expense.date}"></td>
         <td th:text="${expense.direction}"></td>
         <td th:text="${expense.quantity}"></td>
+        <td th:text="${expense.category.name}"></td>
         <td th:text="${expense.detail}"></td>
         <td> <a th:href="@{/expenses/{id}(id=${expense.id})}" class="btn btn-default">View expense </a> </td>
     </tr>
