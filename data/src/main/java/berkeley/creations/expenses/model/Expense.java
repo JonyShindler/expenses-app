@@ -1,6 +1,7 @@
 package berkeley.creations.expenses.model;
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -17,6 +18,8 @@ import java.util.Date;
 public class Expense extends BaseEntity{
 
     private BigDecimal quantity;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date date;
     private Direction direction;
 //    private Category category;
