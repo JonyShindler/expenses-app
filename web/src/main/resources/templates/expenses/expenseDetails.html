@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::body},'expenses')}">
+
+<body>
+
+<h2>Expense Details</h2>
+<!--/*@thmesVar id="owner" type="berkeley.creations.expenses.model.Expense"*/-->
+<table class="table table-striped" th:object="${expense}">
+    <tr><th>Quantity</th> <td><b th:text="'£'+*{quantity}"></b></td></tr>
+    <tr><th>Date</th> <td th:text="*{date}" /></td></tr>
+    <tr><th>Direction</th> <td th:text="*{direction}" /></td></tr>
+    <tr><th>Detail</th> <td th:text="*{detail}" /></td></tr>
+</table>
+
+<br />
+<br />
+<br />
+
+<a th:href="@{{id}/edit(id=${expense.id})}" class="btn btn-default">Edit expense</a>
+
+</body>
+
+</html>
