@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Set;
 
 @RequestMapping()
@@ -54,6 +55,7 @@ public class ExpenseController {
     @GetMapping("/expenses/new")
     public String initCreationForm(Model model) {
         Expense expense = new Expense();
+        expense.setDate(new Date());
         model.addAttribute("expense", expense);
         return EXPENSES_CREATE_OR_UPDATE_EXPENSE_FORM;
     }

@@ -1,0 +1,10 @@
+Tasks:
+
+* add more expense fields
+* duplicate expenses
+* add more categories
+* add default category direction
+* add subcategories
+
+* add way to filter and view categories
+* add way to sort categories in UI.
