@@ -19,7 +19,7 @@
     </thead>
     <tbody>
     <tr th:each="expense : ${expenses}">
-        <td th:text="${expense.date}"></td>
+        <td th:text="${#dates.format(expense.date, 'MMMM yyyy')}"></td>
         <td th:text="${expense.direction}"></td>
         <td th:text="${expense.quantity}"></td>
         <td th:text="${expense.category.name}"></td>
