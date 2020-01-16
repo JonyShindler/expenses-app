@@ -21,6 +21,7 @@ import java.util.Set;
 @Controller
 public class ExpenseController {
 
+    private static final String EXPENSES_CREATE_OR_UPDATE_EXPENSE_FORM = "expenses/createOrUpdateExpenseForm";
     private final ExpenseService expenseService;
     private final CategoryService categoryService;
 
@@ -45,17 +46,16 @@ public class ExpenseController {
         return mav;
     }
 
+    @InitBinder("/expenses/expense")
+    public void initOwnerBinder(WebDataBinder binder) {
+        binder.setDisallowedFields("id");
+    }
 
     @GetMapping("/expenses/new")
     public String initCreationForm(Model model) {
         Expense expense = new Expense();
         model.addAttribute("expense", expense);
-        return "expenses/createOrUpdateExpenseForm";
-    }
-
-    @InitBinder("/expenses/expense")
-    public void initOwnerBinder(WebDataBinder binder) {
-        binder.setDisallowedFields("id");
+        return EXPENSES_CREATE_OR_UPDATE_EXPENSE_FORM;
     }
 
     @PostMapping("/expenses/new")
@@ -65,7 +65,7 @@ public class ExpenseController {
 
         if (result.hasErrors()) {
             model.put("expense", expense);
-            return "expenses/createOrUpdateExpenseForm";
+            return EXPENSES_CREATE_OR_UPDATE_EXPENSE_FORM;
         } else {
             expenseService.save(expense);
             return "redirect:/expenses/" + expense.getId();
@@ -77,4 +77,21 @@ public class ExpenseController {
         return categoryService.findAll();
     }
 
+
+    @GetMapping("/expenses/{expenseId}/edit")
+    public String initUpdateOwnerForm(@PathVariable Long expenseId, Model model) {
+        model.addAttribute(expenseService.findById(expenseId));
+        return EXPENSES_CREATE_OR_UPDATE_EXPENSE_FORM;
+    }
+
+    @PostMapping("/expenses/{expenseId}/edit")
+    public String processUpdateOwnerForm(@Valid Expense expense, BindingResult result, @PathVariable Long expenseId) {
+        if (result.hasErrors()) {
+            return EXPENSES_CREATE_OR_UPDATE_EXPENSE_FORM;
+        } else {
+            expense.setId(expenseId);
+            Expense savedExpense = expenseService.save(expense);
+            return "redirect:/expenses/" + savedExpense.getId();
+        }
+    }
 }
