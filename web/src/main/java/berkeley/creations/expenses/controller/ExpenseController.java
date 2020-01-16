@@ -14,9 +14,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RequestMapping()
 @Controller
@@ -75,8 +74,8 @@ public class ExpenseController {
     }
 
     @ModelAttribute("categories")
-    public Collection<Category> populateCategories() {
-        return categoryService.findAll();
+    public List<Category> populateCategories() {
+        return categoryService.findAll().stream().sorted(Comparator.comparing(Category::getName)).collect(Collectors.toList());
     }
 
 
