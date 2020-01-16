@@ -2,6 +2,7 @@ package berkeley.creations.expenses.controller;
 
 import berkeley.creations.expenses.model.Category;
 import berkeley.creations.expenses.model.Expense;
+import berkeley.creations.expenses.model.Query;
 import berkeley.creations.expenses.service.CategoryService;
 import berkeley.creations.expenses.service.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +37,11 @@ public class ExpenseController {
     public String showAllExpenses(Model model) {
         Set<Expense> expenses = expenseService.findAll();
         model.addAttribute("expenses", expenses);
-        return "expenses/allExpenses";
+        return "/expenses/showExpenses";
     }
 
     @GetMapping("/expenses/{expenseId}")
-    public ModelAndView showExpense(@PathVariable("expenseId") Long expenseId) {
+    public ModelAndView showExpenseDetails(@PathVariable("expenseId") Long expenseId) {
         ModelAndView mav = new ModelAndView("/expenses/expenseDetails");
         mav.addObject(expenseService.findById(expenseId));
         return mav;
@@ -95,4 +96,21 @@ public class ExpenseController {
             return "redirect:/expenses/" + savedExpense.getId();
         }
     }
+
+    @GetMapping("/expenses/query")
+    public String initQuery(Model model) {
+        model.addAttribute("query", new Query());
+        return "expenses/queryExpenses";
+    }
+
+    @PostMapping("/expenses/query")
+    public String processQuery(Query query, Model model) {
+        //TODO pass the results of the query back to the expenses page to show it all expenses?
+        //TODO this is good enough for initial testing
+//        model.addAttribute("query", new Query());
+        Set<Expense> expenses = expenseService.findByCategory(query.getCategory());
+        model.addAttribute("expenses", expenses);
+        return "/expenses/showExpenses";
+    }
+    //TODO we need queries to run as path variables so we can do it for API etc...
 }

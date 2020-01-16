@@ -1,5 +1,6 @@
 package berkeley.creations.expenses.service.jpa;
 
+import berkeley.creations.expenses.model.Category;
 import berkeley.creations.expenses.model.Expense;
 import berkeley.creations.expenses.repository.ExpenseRepository;
 import berkeley.creations.expenses.service.ExpenseService;
@@ -42,5 +43,10 @@ public class ExpenseJPAService implements ExpenseService {
     @Override
     public void deleteById(Long id) {
         expenseRepository.deleteById(id);
+    }
+
+    @Override
+    public Set<Expense> findByCategory(Category category) {
+        return expenseRepository.findByCategory(category);
     }
 }
