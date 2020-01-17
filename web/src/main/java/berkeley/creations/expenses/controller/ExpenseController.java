@@ -6,6 +6,7 @@ import berkeley.creations.expenses.model.Query;
 import berkeley.creations.expenses.service.CategoryService;
 import berkeley.creations.expenses.service.ExpenseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -15,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -55,7 +59,7 @@ public class ExpenseController {
     @GetMapping("/expenses/new")
     public String initCreationForm(Model model) {
         Expense expense = new Expense();
-        expense.setDate(new Date());
+        expense.setDate(LocalDate.now());
         model.addAttribute("expense", expense);
         return EXPENSES_CREATE_OR_UPDATE_EXPENSE_FORM;
     }

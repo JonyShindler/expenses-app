@@ -10,6 +10,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Component
@@ -33,15 +35,15 @@ public class DataLoader implements CommandLineRunner {
         Category trainCategory = categoryService.save(Category.builder().name("Train Pass").build());
 
         expenseService.save(Expense.builder()
-                .date(new Date()).detail("Panda food").quantity(new BigDecimal("23.45"))
+                .date(LocalDate.now()).detail("Panda food").quantity(new BigDecimal("23.45"))
                 .direction(Direction.OUT).category(lunchCategory).build());
 
         expenseService.save(Expense.builder()
-                .date(new Date()).detail("Lunch - nandos").quantity(new BigDecimal("12.00"))
+                .date(LocalDate.now()).detail("Lunch - nandos").quantity(new BigDecimal("12.00"))
                 .direction(Direction.OUT).category(lunchCategory).build());
 
         expenseService.save(Expense.builder()
-                .date(new Date()).detail("monaaaaay").quantity(new BigDecimal("1000.00"))
+                .date(LocalDate.now()).detail("monaaaaay").quantity(new BigDecimal("1000.00"))
                 .direction(Direction.IN).category(salaryCategory).build());
 
         System.out.println("Loading expenses");

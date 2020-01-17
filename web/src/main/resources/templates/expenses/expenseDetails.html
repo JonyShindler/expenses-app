@@ -9,7 +9,7 @@
 <!--/*@thmesVar id="owner" type="berkeley.creations.expenses.model.Expense"*/-->
 <table class="table table-striped" th:object="${expense}">
     <tr><th>Quantity</th> <td><b th:text="'£'+*{quantity}"></b></td></tr>
-    <tr><th>Date</th> <td th:text="*{#dates.format(date, 'MMMM yyyy')}" /></td></tr>
+    <tr><th>Date</th> <td th:text="*{#temporals.format(date, 'MMMM yyyy')}" /></td></tr>
     <tr><th>Category</th> <td th:text="*{category.name}" /></td></tr>
     <tr><th>Direction</th> <td th:text="*{direction}" /></td></tr>
     <tr><th>Detail</th> <td th:text="*{detail}" /></td></tr>
