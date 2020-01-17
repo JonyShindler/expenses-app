@@ -35,7 +35,7 @@ public class DataLoader implements CommandLineRunner {
         Category trainCategory = categoryService.save(Category.builder().name("Train Pass").build());
 
         expenseService.save(Expense.builder()
-                .date(LocalDate.now()).detail("Panda food").quantity(new BigDecimal("23.45"))
+                .date(LocalDate.now().plusMonths(3)).detail("Panda food").quantity(new BigDecimal("23.45"))
                 .direction(Direction.OUT).category(lunchCategory).build());
 
         expenseService.save(Expense.builder()

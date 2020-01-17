@@ -16,9 +16,9 @@ HomePage:
 Account summary
 Total Wealth etc
 
-HREF:
-Summary page (pivot table)
-Query page. (this should query on it and have results on same page.)
-See all expenses in general?
-
 ExpenseDetails page needs links back to query and also back to all expenses?
+
+We need to be able to have dropdowns with NONE or blank for category and month so we can query more easily
+Also lets have the query options on the RHS and the expenses smaller as the columns are very big.
+
+We probs dont need an 'allExpenses' sheet as queries will be the same thing? Same as we have in excel.
