@@ -14,5 +14,31 @@
         </div>
     </div>
 </form>
+
+<table id="expenses" class="table table-striped">
+    <thead>
+    <tr>
+        <th style="width: 150px;">Date</th>
+        <th style="width: 200px;">Direction</th>
+        <th style="width: 120px">Quantity</th>
+        <th style="width: 120px">Category</th>
+        <th style="width: 120px">Detail</th>
+        <th style="width: 120px">View</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="expense : ${expenses}">
+        <td th:text="${#dates.format(expense.date, 'MMMM yyyy')}"></td>
+        <td th:text="${expense.direction}"></td>
+        <td th:text="${expense.quantity}"></td>
+        <td th:text="${expense.category.name}"></td>
+        <td th:text="${expense.detail}"></td>
+        <td> <a th:href="@{/expenses/{id}(id=${expense.id})}" class="btn btn-default">View expense </a> </td>
+    </tr>
+    </tbody>
+</table>
+
+
+
 </body>
 </html>

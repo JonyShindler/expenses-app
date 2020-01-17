@@ -97,20 +97,4 @@ public class ExpenseController {
         }
     }
 
-    @GetMapping("/expenses/query")
-    public String initQuery(Model model) {
-        model.addAttribute("query", new Query());
-        return "expenses/queryExpenses";
-    }
-
-    @PostMapping("/expenses/query")
-    public String processQuery(Query query, Model model) {
-        //TODO pass the results of the query back to the expenses page to show it all expenses?
-        //TODO this is good enough for initial testing
-//        model.addAttribute("query", new Query());
-        Set<Expense> expenses = expenseService.findByCategory(query.getCategory());
-        model.addAttribute("expenses", expenses);
-        return "/expenses/showExpenses";
-    }
-    //TODO we need queries to run as path variables so we can do it for API etc...
 }
