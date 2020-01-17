@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'expenses')}" lang="en">
+
+<body>
+
+<h2>Summary</h2>
+
+Account balance = £50
+Total money = £100
+
+<br />
+<br />
+
+<a th:href="@{/expenses/table}" class="btn btn-default">Expenses breakdown</a>
+<br />
+<a th:href="@{/expenses}" class="btn btn-default">All expenses</a>
+<br />
+<a th:href="@{/expenses/query}" class="btn btn-default">Query expenses</a>
+
+
+</body>
+</html>

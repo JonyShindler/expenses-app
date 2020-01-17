@@ -8,3 +8,17 @@ Tasks:
 
 * add way to filter and view categories
 * add way to sort categories in UI.
+
+
+Page Layout
+
+HomePage:
+Account summary
+Total Wealth etc
+
+HREF:
+Summary page (pivot table)
+Query page. (this should query on it and have results on same page.)
+See all expenses in general?
+
+ExpenseDetails page needs links back to query and also back to all expenses?

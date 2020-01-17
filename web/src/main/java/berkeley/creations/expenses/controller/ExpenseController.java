@@ -33,7 +33,7 @@ public class ExpenseController {
     }
 
 
-    @GetMapping({"/expenses","/",""})
+    @GetMapping("/expenses")
     public String showAllExpenses(Model model) {
         Set<Expense> expenses = expenseService.findAll();
         model.addAttribute("expenses", expenses);
