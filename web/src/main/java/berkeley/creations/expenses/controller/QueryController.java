@@ -4,7 +4,7 @@ import berkeley.creations.expenses.model.Category;
 import berkeley.creations.expenses.model.Expense;
 import berkeley.creations.expenses.model.Query;
 import berkeley.creations.expenses.service.CategoryService;
-import berkeley.creations.expenses.service.ExpenseService;
+import berkeley.creations.expenses.service.QueryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,12 +21,11 @@ import java.util.stream.Collectors;
 @Controller
 public class QueryController {
 
-    private final ExpenseService expenseService;
+    private final QueryService queryService;
     private final CategoryService categoryService;
 
-
-    public QueryController(ExpenseService expenseService, CategoryService categoryService) {
-        this.expenseService = expenseService;
+    public QueryController(QueryService queryService, CategoryService categoryService) {
+        this.queryService = queryService;
         this.categoryService = categoryService;
     }
 
@@ -44,7 +43,7 @@ public class QueryController {
     @PostMapping("/expenses/query")
     public String processQuery(Query query, Model model) {
 //        model.addAttribute("query", new Query());
-        Set<Expense> expenses = expenseService.findByCategory(query.getCategory());
+        Set<Expense> expenses = queryService.queryExpenses(query);
         model.addAttribute("expenses", expenses);
         return "/expenses/queryExpenses";
     }
