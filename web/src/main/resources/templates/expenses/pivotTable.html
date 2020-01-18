@@ -14,22 +14,18 @@
         <th style="width: 150px;">Total</th>
     </tr>
 
-<!--    <tr>-->
-<!--        <th style="width: 200px;">Total</th>-->
-<!--    </tr>-->
     </thead>
     <tbody>
     <!--/*@thymesVar id="rows" type="berkeley.creations.expenses.model.PivotRow"*/-->
     <tr th:each="row : ${rows}">
         <td th:text="${#temporals.format(row.date, 'MMMM yyyy')}"></td>
-        <td th:text="${row.categoryTotals.get('Big Purchases')}"></td>
-        <td th:text="${row.categoryTotals.get('Holiday')}"></td>
-        <td th:text="${row.categoryTotals.get('Lunch')}"></td>
-        <td th:text="${row.categoryTotals.get('Salary')}"></td>
-        <td th:text="${row.categoryTotals.get('Train Pass')}"></td>
+
+        <th:block th:each="category : ${categoryNames}">
+            <td th:text="${row.categoryTotals.get(category)}"></td>
+        </th:block>
+
         <td th:text="${row.total}"></td>
 
-<!--        <td> <a th:href="@{/expenses/{id}(id=${expense.id})}" class="btn btn-default">View expense </a> </td>-->
     </tr>
     </tbody>
 </table>
