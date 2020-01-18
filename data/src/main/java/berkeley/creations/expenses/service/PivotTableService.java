@@ -1,5 +1,6 @@
 package berkeley.creations.expenses.service;
 
+import berkeley.creations.expenses.model.Direction;
 import berkeley.creations.expenses.model.Expense;
 import berkeley.creations.expenses.model.PivotRow;
 import org.springframework.stereotype.Service;
@@ -45,15 +46,15 @@ public class PivotTableService {
                 ));
     }
 
-        private Map<YearMonth, List<Expense>> getExpensesGroupedByMonth(){
-        Set<Expense> allExpenses = expenseService.findAll();
+    private Map<YearMonth, List<Expense>> getExpensesGroupedByMonth(){
+    List<Expense> allExpenses = expenseService.findAllOrdered();
 
-        return allExpenses.stream()
-                .collect(Collectors.groupingBy(exp -> YearMonth.from(exp.getDate()),
-                                                                    TreeMap::new,
-                                                Collectors.toCollection(ArrayList::new))
-        );
+    return allExpenses.stream()
+            .collect(Collectors.groupingBy(exp -> YearMonth.from(exp.getDate()),
+                                                                TreeMap::new,
+                                            Collectors.toCollection(ArrayList::new))
+    );
 
-    }
+}
 
 }

@@ -39,7 +39,7 @@ public class ExpenseController {
 
     @GetMapping("/expenses")
     public String showAllExpenses(Model model) {
-        Set<Expense> expenses = expenseService.findAll();
+        List<Expense> expenses = expenseService.findAllOrdered();
         model.addAttribute("expenses", expenses);
         return "/expenses/showExpenses";
     }

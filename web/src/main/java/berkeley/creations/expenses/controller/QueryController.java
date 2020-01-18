@@ -44,7 +44,7 @@ public class QueryController {
 
     @GetMapping("/expenses/query")
     public String initQuery(Model model) {
-        model.addAttribute("expenses", expenseService.findAll());
+        model.addAttribute("expenses", expenseService.findAllOrdered());
         model.addAttribute("query", new Query());
         return "expenses/queryExpenses";
     }
@@ -52,7 +52,7 @@ public class QueryController {
     @PostMapping("/expenses/query")
     public String processQuery(Query query, Model model) {
 //        model.addAttribute("query", new Query());
-        Set<Expense> expenses = queryService.queryExpenses(query);
+        List<Expense> expenses = queryService.queryExpenses(query);
         model.addAttribute("expenses", expenses);
         return "/expenses/queryExpenses";
     }

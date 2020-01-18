@@ -5,6 +5,7 @@ import berkeley.creations.expenses.model.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -19,13 +20,13 @@ public class QueryService {
         this.expenseService = expenseService;
     }
 
-    public Set<Expense> queryExpenses(Query query) {
-        return expenseService.findAll()
+    public List<Expense> queryExpenses(Query query) {
+        return expenseService.findAllOrdered()
                 .stream()
                 .filter(categoriesMatch(query))
                 .filter(monthsMatch(query))
                 .filter(yearMatch(query))
-                .collect(Collectors.toSet());
+                .collect(Collectors.toList());
     }
 
     private Predicate<Expense> categoriesMatch(Query query) {

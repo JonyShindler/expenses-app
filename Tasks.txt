@@ -21,3 +21,6 @@ ExpenseDetails page needs links back to query and also back to all expenses?
 
 Also lets have the query options on the RHS and the expenses smaller as the columns are very big.
 We probs dont need an 'allExpenses' sheet as queries will be the same thing? Same as we have in excel.
+
+On query page add totals for the query as well in a box at the top?
+All of the rows are two thick. They can be much much smaller. Change font size down for sure.
