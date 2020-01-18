@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'expenses')}" lang="en">
+
+
+<body>
+
+<h2>Expense Details</h2>
+<!--/*@thmesVar id="owner" type="berkeley.creations.expenses.model.Expense"*/-->
+<table id="expenses" class="table table-striped">
+    <thead>
+    <tr>
+        <th style="width: 150px;">Month</th>
+        <th style="width: 200px;">Total</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="row : ${rows}">
+        <td th:text="${#temporals.format(row.date, 'MMMM yyyy')}"></td>
+        <td th:text="${row.total}"></td>
+<!--        <td> <a th:href="@{/expenses/{id}(id=${expense.id})}" class="btn btn-default">View expense </a> </td>-->
+    </tr>
+    </tbody>
+</table>
+
+<br />
+<br />
+<br />
+
+</body>
+
+</html>

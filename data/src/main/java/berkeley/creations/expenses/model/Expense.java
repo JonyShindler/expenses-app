@@ -32,4 +32,15 @@ public class Expense extends BaseEntity{
 
     private String detail;
 
+
+    @Override
+    public String toString() {
+        return "Expense{" +
+                "quantity=" + quantity +
+                ", date=" + date +
+                ", direction=" + direction +
+                ", category=" + category +
+                ", detail='" + detail + '\'' +
+                '}';
+    }
 }
