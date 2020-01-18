@@ -6,8 +6,8 @@
 <h2>Query Expenses</h2>
 <form th:object="${query}" class="form-horizontal" id="query-expense-form" method="post">
     <div class="form-group has-feedback">
-        <input th:replace="~{fragments/selectFieldId :: selectId ('Category', 'category', ${categories})}" />
-        <input th:replace="~{fragments/selectField :: select ('Month', 'month', ${T(java.time.Month).values()})}" />
+        <input th:replace="~{fragments/selectField :: select ('Category', 'category', ${categories}, true, true)}" />
+        <input th:replace="~{fragments/selectField :: select ('Month', 'month', ${T(java.time.Month).values()}, false, true)}" />
     </div>
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">

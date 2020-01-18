@@ -25,15 +25,14 @@ public class QueryService {
                 .filter(categoriesMatch(query))
                 .filter(monthsMatch(query))
                 .collect(Collectors.toSet());
-
     }
 
     private Predicate<Expense> categoriesMatch(Query query) {
-        return e -> e.getCategory().equals(query.getCategory());
+        return e -> query.getCategory() == null || e.getCategory().equals(query.getCategory());
     }
 
     private Predicate<Expense> monthsMatch(Query query) {
-        return e -> e.getDate().getMonth() == (query.getMonth());
+        return e -> query.getMonth() == null || e.getDate().getMonth() == (query.getMonth());
     }
 
 }

@@ -8,8 +8,8 @@
     <div class="form-group has-feedback">
         <input th:replace="~{fragments/inputField :: input ('Quantity', 'quantity', 'text')}" />
         <input th:replace="~{fragments/inputField :: input ('Date', 'date', 'date')}" />
-        <input th:replace="~{fragments/selectFieldId :: selectId ('Category', 'category', ${categories})}" />
-        <input th:replace="~{fragments/selectField :: select ('Direction', 'direction', ${T(berkeley.creations.expenses.model.Direction).values()})}" />
+        <input th:replace="~{fragments/selectField :: select ('Category', 'category', ${categories}, true, false)}" />
+        <input th:replace="~{fragments/selectField :: select ('Direction', 'direction', ${T(berkeley.creations.expenses.model.Direction).values()}, false, false)}" />
         <input th:replace="~{fragments/inputField :: input ('Detail', 'detail', 'text')}" />
     </div>
     <div class="form-group">

@@ -3,6 +3,7 @@ package berkeley.creations.expenses.model;
 import lombok.*;
 
 import java.time.Month;
+import java.time.Year;
 
 @Getter
 @Setter
@@ -15,5 +16,11 @@ public class Query {
 
     private Category category;
     private Month month;
+
+    private Year year;
+
+    //daterange?
+
+    //value range?
 
 }
