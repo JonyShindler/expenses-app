@@ -1,5 +1,6 @@
 package berkeley.creations.expenses.service;
 
+import berkeley.creations.expenses.model.Category;
 import berkeley.creations.expenses.model.Expense;
 import berkeley.creations.expenses.model.PivotRow;
 import org.springframework.stereotype.Service;
@@ -24,10 +25,11 @@ public class PivotTableService {
         // Group all expenses by YearMonth
         Map<YearMonth, List<Expense>> expensesGroupedByMonth = getExpensesGroupedByMonth();
 
-        // Get the total for each.
+        // Get the total for eac YearMonth
         return expensesGroupedByMonth.entrySet().stream()
                 .map(e ->PivotRow.builder()
                         .date(e.getKey())
+                        .categoryTotals(sumExpensesByCategoryForMonth(e.getValue()))
                         .total(sumExpenses(e.getValue()))
                         .build()
                 )
@@ -38,7 +40,14 @@ public class PivotTableService {
         return expenses.stream().map(Expense::getQuantity).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    private Map<YearMonth, List<Expense>> getExpensesGroupedByMonth(){
+    private Map<Category, BigDecimal> sumExpensesByCategoryForMonth(List<Expense> expensesForMonth) {
+        return expensesForMonth.stream()
+                .collect(Collectors.groupingBy(Expense::getCategory,
+                        Collectors.reducing(BigDecimal.ZERO, Expense::getQuantity, BigDecimal::add)
+                ));
+    }
+
+        private Map<YearMonth, List<Expense>> getExpensesGroupedByMonth(){
         Set<Expense> allExpenses = expenseService.findAll();
 
         return allExpenses.stream()

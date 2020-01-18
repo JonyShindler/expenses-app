@@ -6,13 +6,17 @@
 <body>
 
 <h2>Expense Details</h2>
-<!--/*@thmesVar id="owner" type="berkeley.creations.expenses.model.Expense"*/-->
-<table id="expenses" class="table table-striped">
+<table id="expensesPivotTable" class="table table-striped">
     <thead>
-    <tr>
+    <tr class="headings">
         <th style="width: 150px;">Month</th>
-        <th style="width: 200px;">Total</th>
+        <th th:each="category : ${categories}" class="column-title" th:text="${category.name}"></th>
+        <th style="width: 150px;">Total</th>
     </tr>
+
+<!--    <tr>-->
+<!--        <th style="width: 200px;">Total</th>-->
+<!--    </tr>-->
     </thead>
     <tbody>
     <tr th:each="row : ${rows}">

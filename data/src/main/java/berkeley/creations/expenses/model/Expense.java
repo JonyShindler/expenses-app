@@ -32,7 +32,6 @@ public class Expense extends BaseEntity{
 
     private String detail;
 
-
     @Override
     public String toString() {
         return "Expense{" +
