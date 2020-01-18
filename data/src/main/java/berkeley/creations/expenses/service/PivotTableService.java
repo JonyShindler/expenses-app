@@ -40,9 +40,9 @@ public class PivotTableService {
         return expenses.stream().map(Expense::getQuantity).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    private Map<Category, BigDecimal> sumExpensesByCategoryForMonth(List<Expense> expensesForMonth) {
+    private Map<String, BigDecimal> sumExpensesByCategoryForMonth(List<Expense> expensesForMonth) {
         return expensesForMonth.stream()
-                .collect(Collectors.groupingBy(Expense::getCategory,
+                .collect(Collectors.groupingBy(exp -> exp.getCategory().getName(),
                         Collectors.reducing(BigDecimal.ZERO, Expense::getQuantity, BigDecimal::add)
                 ));
     }

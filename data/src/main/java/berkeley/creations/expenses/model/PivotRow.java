@@ -3,7 +3,6 @@ package berkeley.creations.expenses.model;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.YearMonth;
 import java.util.Map;
 
@@ -19,7 +18,7 @@ public class PivotRow {
 
     private YearMonth date;
     private BigDecimal total;
-    private Map<Category, BigDecimal> categoryTotals;
+    private Map<String, BigDecimal> categoryTotals;
 
     @Override
     public String toString() {
