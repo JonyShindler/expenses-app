@@ -8,6 +8,7 @@
     <div class="form-group has-feedback">
         <input th:replace="~{fragments/selectField :: select ('Category', 'category', ${categories}, true, true)}" />
         <input th:replace="~{fragments/selectField :: select ('Month', 'month', ${T(java.time.Month).values()}, false, true)}" />
+        <input th:replace="~{fragments/selectField :: select ('Year', 'year', ${years}, false, true)}" />
     </div>
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">

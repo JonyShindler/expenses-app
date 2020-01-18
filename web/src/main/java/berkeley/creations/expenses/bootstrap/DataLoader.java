@@ -14,6 +14,9 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
+import static berkeley.creations.expenses.model.Direction.*;
+import static java.time.LocalDate.*;
+
 @Component
 public class DataLoader implements CommandLineRunner {
 
@@ -35,17 +38,21 @@ public class DataLoader implements CommandLineRunner {
         Category trainCategory = categoryService.save(Category.builder().name("Train Pass").build());
 
         expenseService.save(Expense.builder()
-                .date(LocalDate.now().plusMonths(3)).detail("Panda food").quantity(new BigDecimal("23.45"))
-                .direction(Direction.OUT).category(lunchCategory).build());
+                .date(now().plusMonths(3)).detail("Panda food").quantity(bd("23.45")).direction(OUT).category(lunchCategory).build());
 
         expenseService.save(Expense.builder()
-                .date(LocalDate.now()).detail("Lunch - nandos").quantity(new BigDecimal("12.00"))
-                .direction(Direction.OUT).category(lunchCategory).build());
+                .date(now()).detail("Lunch - nandos").quantity(bd("12.00")).direction(OUT).category(lunchCategory).build());
 
         expenseService.save(Expense.builder()
-                .date(LocalDate.now()).detail("monaaaaay").quantity(new BigDecimal("1000.00"))
-                .direction(Direction.IN).category(salaryCategory).build());
+                .date(now()).detail("monaaaaay").quantity(bd("1000.00")).direction(IN).category(salaryCategory).build());
+
+        expenseService.save(Expense.builder()
+                .date(now().minusYears(1)).detail("Norway").quantity(bd("1507.40")).direction(OUT).category(holidayCategory).build());
 
         System.out.println("Loading expenses");
+    }
+
+    private BigDecimal bd(String s) {
+        return new BigDecimal(s);
     }
 }

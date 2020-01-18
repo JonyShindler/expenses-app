@@ -16,7 +16,6 @@ public class Query {
 
     private Category category;
     private Month month;
-
     private Year year;
 
     //daterange?

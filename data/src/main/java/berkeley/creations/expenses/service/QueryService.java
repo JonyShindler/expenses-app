@@ -24,6 +24,7 @@ public class QueryService {
                 .stream()
                 .filter(categoriesMatch(query))
                 .filter(monthsMatch(query))
+                .filter(yearMatch(query))
                 .collect(Collectors.toSet());
     }
 
@@ -33,6 +34,10 @@ public class QueryService {
 
     private Predicate<Expense> monthsMatch(Query query) {
         return e -> query.getMonth() == null || e.getDate().getMonth() == (query.getMonth());
+    }
+
+    private Predicate<Expense> yearMatch(Query query) {
+        return e -> query.getYear() == null || e.getDate().getYear() == (query.getYear().getValue());
     }
 
 }

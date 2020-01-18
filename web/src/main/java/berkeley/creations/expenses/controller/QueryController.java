@@ -4,6 +4,7 @@ import berkeley.creations.expenses.model.Category;
 import berkeley.creations.expenses.model.Expense;
 import berkeley.creations.expenses.model.Query;
 import berkeley.creations.expenses.service.CategoryService;
+import berkeley.creations.expenses.service.ExpenseService;
 import berkeley.creations.expenses.service.QueryService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,10 +24,12 @@ public class QueryController {
 
     private final QueryService queryService;
     private final CategoryService categoryService;
+    private final ExpenseService expenseService;
 
-    public QueryController(QueryService queryService, CategoryService categoryService) {
+    public QueryController(QueryService queryService, CategoryService categoryService, ExpenseService expenseService) {
         this.queryService = queryService;
         this.categoryService = categoryService;
+        this.expenseService = expenseService;
     }
 
     @ModelAttribute("categories")
@@ -34,8 +37,14 @@ public class QueryController {
         return categoryService.findAll().stream().sorted(Comparator.comparing(Category::getName)).collect(Collectors.toList());
     }
 
+    @ModelAttribute("years")
+    public List<Integer> populateYears() {
+        return expenseService.findAll().stream().map(e -> e.getDate().getYear()).distinct().sorted().collect(Collectors.toList());
+    }
+
     @GetMapping("/expenses/query")
     public String initQuery(Model model) {
+        model.addAttribute("expenses", expenseService.findAll());
         model.addAttribute("query", new Query());
         return "expenses/queryExpenses";
     }
