@@ -1,9 +1,6 @@
 package berkeley.creations.expenses.service;
 
-import berkeley.creations.expenses.model.Category;
-import berkeley.creations.expenses.model.Direction;
-import berkeley.creations.expenses.model.Expense;
-import berkeley.creations.expenses.model.PivotRow;
+import berkeley.creations.expenses.model.*;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -15,25 +12,34 @@ import java.util.stream.Collectors;
 public class PivotTableService {
 
     private final ExpenseService expenseService;
+    private final CategoryService categoryService;
 
-    public PivotTableService(ExpenseService expenseService) {
+    public PivotTableService(ExpenseService expenseService, CategoryService categoryService) {
         this.expenseService = expenseService;
+        this.categoryService = categoryService;
     }
 
-    public List<PivotRow> buildTable() {
-
+    public PivotTable buildTable() {
         // Group all expenses by YearMonth
         Map<YearMonth, List<Expense>> expensesGroupedByMonth = getExpensesGroupedByMonth();
 
         // Get the total for eac YearMonth
-        return expensesGroupedByMonth.entrySet().stream()
-                .map(e ->PivotRow.builder()
+        List<PivotRow> pivotRows = expensesGroupedByMonth.entrySet().stream()
+                .map(e -> PivotRow.builder()
                         .date(e.getKey())
                         .categoryTotals(sumExpensesByCategoryForMonth(e.getValue()))
                         .total(sumExpenses(e.getValue()))
                         .build()
                 )
                 .collect(Collectors.toList());
+
+        List<Category> categories = getCategoriesForTable();
+
+        return PivotTable.builder().rows(pivotRows).categories(categories).build();
+    }
+
+    private List<Category> getCategoriesForTable() {
+        return categoryService.findAll().stream().sorted(Comparator.comparing(Category::getName)).collect(Collectors.toList());
     }
 
     private BigDecimal sumExpenses(List<Expense> expenses) {

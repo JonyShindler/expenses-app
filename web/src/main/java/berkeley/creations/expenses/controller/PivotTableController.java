@@ -2,6 +2,7 @@ package berkeley.creations.expenses.controller;
 
 import berkeley.creations.expenses.model.Category;
 import berkeley.creations.expenses.model.PivotRow;
+import berkeley.creations.expenses.model.PivotTable;
 import berkeley.creations.expenses.service.CategoryService;
 import berkeley.creations.expenses.service.PivotTableService;
 import org.springframework.stereotype.Controller;
@@ -19,23 +20,17 @@ import java.util.stream.Collectors;
 public class PivotTableController {
 
     private final PivotTableService pivotTableService;
-    private final CategoryService categoryService;
 
-    public PivotTableController(PivotTableService pivotTableService, CategoryService categoryService) {
+    public PivotTableController(PivotTableService pivotTableService) {
         this.pivotTableService = pivotTableService;
-        this.categoryService = categoryService;
     }
 
+    //TODO this should ideally take a set of expenses to use?
     @GetMapping("/expenses/table")
     public String showBreakdown(Model model) {
-        List<PivotRow> pivotRows = pivotTableService.buildTable();
-        model.addAttribute("rows", pivotRows);
+        PivotTable table = pivotTableService.buildTable();
+        model.addAttribute("table", table);
         return "/expenses/pivotTable";
-    }
-
-    @ModelAttribute("categories")
-    public List<Category> populateCategories() {
-        return categoryService.findAll().stream().sorted(Comparator.comparing(Category::getName)).collect(Collectors.toList());
     }
 
 }

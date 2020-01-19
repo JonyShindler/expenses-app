@@ -10,17 +10,17 @@
     <thead>
     <tr class="headings">
         <th style="width: 150px;">Month</th>
-        <th th:each="category : ${categories}" class="column-title" th:text="${category.name}"></th>
+        <th th:each="category : ${table.categories}" class="column-title" th:text="${category.name}"></th>
         <th style="width: 150px;">Total</th>
     </tr>
 
     </thead>
     <tbody>
     <!--/*@thymesVar id="rows" type="berkeley.creations.expenses.model.PivotRow"*/-->
-    <tr th:each="row : ${rows}">
+    <tr th:each="row : ${table.rows}">
         <td th:text="${#temporals.format(row.date, 'MMMM yyyy')}"></td>
 
-        <th:block th:each="category : ${categories}">
+        <th:block th:each="category : ${table.categories}">
             <td th:text="${row.categoryTotals.get(category)}"></td>
         </th:block>
 

@@ -12,5 +12,7 @@ import java.util.List;
 public class PivotTable {
 
     List<Category> categories;
+    List<PivotRow> rows;
+    PivotRow totalsRow;
 
 }
