@@ -25,8 +25,17 @@
         </th:block>
 
         <td th:text="${row.total}"></td>
-
     </tr>
+
+    <tfoot>
+        <tr class="headings">
+            <th style="width: 150px;">Totals</th>
+            <th:block th:each="category : ${table.categories}">
+                <td th:text="${table.totalsRow.categoryTotals.get(category)}"></td>
+            </th:block>
+            <td th:text="${table.totalsRow.total}"></td>
+        </tr>
+    </tfoot>
     </tbody>
 </table>
 
