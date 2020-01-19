@@ -38,9 +38,4 @@ public class PivotTableController {
         return categoryService.findAll().stream().sorted(Comparator.comparing(Category::getName)).collect(Collectors.toList());
     }
 
-    @ModelAttribute("categoryNames")
-    public List<String> populateCategoryNames() {
-        return categoryService.findAll().stream().map(Category::getName).sorted().collect(Collectors.toList());
-    }
-
 }

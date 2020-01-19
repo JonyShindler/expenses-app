@@ -20,7 +20,7 @@
     <tr th:each="row : ${rows}">
         <td th:text="${#temporals.format(row.date, 'MMMM yyyy')}"></td>
 
-        <th:block th:each="category : ${categoryNames}">
+        <th:block th:each="category : ${categories}">
             <td th:text="${row.categoryTotals.get(category)}"></td>
         </th:block>
 

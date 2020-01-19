@@ -18,7 +18,7 @@ public class PivotRow {
 
     private YearMonth date;
     private BigDecimal total;
-    private Map<String, BigDecimal> categoryTotals;
+    private Map<Category, BigDecimal> categoryTotals;
 
     @Override
     public String toString() {

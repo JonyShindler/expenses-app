@@ -1,5 +1,6 @@
 package berkeley.creations.expenses.service;
 
+import berkeley.creations.expenses.model.Category;
 import berkeley.creations.expenses.model.Direction;
 import berkeley.creations.expenses.model.Expense;
 import berkeley.creations.expenses.model.PivotRow;
@@ -39,9 +40,9 @@ public class PivotTableService {
         return expenses.stream().map(Expense::getQuantity).reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
-    private Map<String, BigDecimal> sumExpensesByCategoryForMonth(List<Expense> expensesForMonth) {
+    private Map<Category, BigDecimal> sumExpensesByCategoryForMonth(List<Expense> expensesForMonth) {
         return expensesForMonth.stream()
-                .collect(Collectors.groupingBy(exp -> exp.getCategory().getName(),
+                .collect(Collectors.groupingBy(Expense::getCategory,
                         Collectors.reducing(BigDecimal.ZERO, Expense::getQuantity, BigDecimal::add)
                 ));
     }
