@@ -54,7 +54,7 @@ public class QueryController {
 //        model.addAttribute("query", new Query());
         List<Expense> expenses = queryService.queryExpenses(query);
         model.addAttribute("expenses", expenses);
-        return "/expenses/queryExpenses";
+        return "expenses/queryExpenses";
     }
     //TODO we need queries to run as path variables so we can do it for API etc...
 

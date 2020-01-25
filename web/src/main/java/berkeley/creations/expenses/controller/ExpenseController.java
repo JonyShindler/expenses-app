@@ -41,12 +41,12 @@ public class ExpenseController {
     public String showAllExpenses(Model model) {
         List<Expense> expenses = expenseService.findAllOrdered();
         model.addAttribute("expenses", expenses);
-        return "/expenses/showExpenses";
+        return "expenses/showExpenses";
     }
 
     @GetMapping("/expenses/{expenseId}")
     public ModelAndView showExpenseDetails(@PathVariable("expenseId") Long expenseId) {
-        ModelAndView mav = new ModelAndView("/expenses/expenseDetails");
+        ModelAndView mav = new ModelAndView("expenses/expenseDetails");
         mav.addObject(expenseService.findById(expenseId));
         return mav;
     }

@@ -30,7 +30,7 @@ public class PivotTableController {
     public String showBreakdown(Model model) {
         PivotTable table = pivotTableService.buildTable();
         model.addAttribute("table", table);
-        return "/expenses/pivotTable";
+        return "expenses/pivotTable";
     }
 
 }

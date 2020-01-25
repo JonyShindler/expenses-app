@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -48,18 +49,16 @@ public class DataLoader implements CommandLineRunner {
         List<List<String>> records = new ArrayList<List<String>>();
 
         try {
-            FileReader dataFile = new FileReader("C:\\Users\\jonathan\\IdeaProjects\\expenses-app\\web\\src\\main\\resources\\sampleData\\2016Data.csv");
+            CSVReader dataFile = new CSVReader(new InputStreamReader(getClass().getResourceAsStream("/sampleData/2016Data.csv")));
             extractDataFromFile(records, dataFile);
         } catch (FileNotFoundException e) {
             System.out.println("File not found, not loading data");
         }
 
-
         System.out.println("CSV records: " + records.size());
     }
 
-    private void extractDataFromFile(List<List<String>> records, FileReader dataFile) throws IOException {
-        try (CSVReader csvReader = new CSVReader(dataFile)) {
+    private void extractDataFromFile(List<List<String>> records, CSVReader csvReader) throws IOException {
             String[] values;
             while ((values = csvReader.readNext()) != null) {
                 // 0 = month
@@ -94,7 +93,6 @@ public class DataLoader implements CommandLineRunner {
                         .build());
                 records.add(Arrays.asList(values));
             }
-        }
     }
 
     private void buildSampleData() {
