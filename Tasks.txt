@@ -21,5 +21,4 @@ add new expense to bar at top
 same for show-all expenses button in top bar
 
 sort out all CSS - looks like i have to run a package to get the less css to change...
-add reset button to query
 add totals at bottom of any expenses query system

@@ -109,12 +109,20 @@ public class ExpenseController {
     }
 
 
-    @PostMapping("/expenses")
+    @PostMapping(value = "/expenses", params = "action=Query")
     public String processQuery(Query query, Model model) {
+
         List<Expense> expenses = queryService.queryExpenses(query);
         model.addAttribute("expenses", expenses);
         return "expenses/showExpenses";
     }
 
+    @PostMapping(value = "/expenses", params = "action=Reset")
+    public String processQueryReset(Query query, Model model) {
+        model.addAttribute("query", new Query());
+        List<Expense> expenses = expenseService.findAllOrdered();
+        model.addAttribute("expenses", expenses);
+        return "expenses/showExpenses";
+    }
 
 }
