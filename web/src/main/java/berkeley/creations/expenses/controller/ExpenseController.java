@@ -5,8 +5,8 @@ import berkeley.creations.expenses.model.Expense;
 import berkeley.creations.expenses.model.Query;
 import berkeley.creations.expenses.service.CategoryService;
 import berkeley.creations.expenses.service.ExpenseService;
+import berkeley.creations.expenses.service.QueryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -29,11 +27,13 @@ public class ExpenseController {
     private static final String EXPENSES_CREATE_OR_UPDATE_EXPENSE_FORM = "expenses/createOrUpdateExpenseForm";
     private final ExpenseService expenseService;
     private final CategoryService categoryService;
+    private final QueryService queryService;
 
     @Autowired
-    public ExpenseController(ExpenseService expenseService, CategoryService categoryService) {
+    public ExpenseController(ExpenseService expenseService, CategoryService categoryService, QueryService queryService) {
         this.expenseService = expenseService;
         this.categoryService = categoryService;
+        this.queryService = queryService;
     }
 
 
@@ -41,6 +41,8 @@ public class ExpenseController {
     public String showAllExpenses(Model model) {
         List<Expense> expenses = expenseService.findAllOrdered();
         model.addAttribute("expenses", expenses);
+        model.addAttribute("query", new Query());
+
         return "expenses/showExpenses";
     }
 
@@ -100,5 +102,19 @@ public class ExpenseController {
             return "redirect:/expenses/" + savedExpense.getId();
         }
     }
+
+    @ModelAttribute("years")
+    public List<Integer> populateYears() {
+        return expenseService.findAll().stream().map(e -> e.getDate().getYear()).distinct().sorted().collect(Collectors.toList());
+    }
+
+
+    @PostMapping("/expenses")
+    public String processQuery(Query query, Model model) {
+        List<Expense> expenses = queryService.queryExpenses(query);
+        model.addAttribute("expenses", expenses);
+        return "expenses/showExpenses";
+    }
+
 
 }
