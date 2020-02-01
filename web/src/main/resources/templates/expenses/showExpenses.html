@@ -45,13 +45,9 @@
             <input th:replace="~{fragments/selectField :: select ('Year', 'year', ${years}, false, true)}" />
         </div>
 
-        <div class="form-group" >
-                <div class="col-sm-offset-2 col-sm-10" style="width: 50%; float: left">
-                    <input class="btn btn-default" name = "action" value = "Query" type="submit">
-                </div>
-                <div class="col-sm-offset-2 col-sm-10" style="width: 50%; float: right">
-                    <input class="btn btn-default" name = "action" value = "Reset" type="submit">
-                </div>
+        <div class="form-inline" >
+            <input class="btn btn-default" name = "action" value = "Query" type="submit">
+            <input class="btn btn-default" name = "action" value = "Reset" type="submit">
         </div>
 
     </form>
