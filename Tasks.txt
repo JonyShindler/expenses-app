@@ -13,7 +13,7 @@ Also lets have the query options on the RHS and the expenses smaller as the colu
 We probs dont need an 'allExpenses' sheet as queries will be the same thing? Same as we have in excel.
 
 On query page add totals for the query as well in a box at the top?
-All of the rows are two thick. They can be much much smaller. Change font size down for sure.
+It can be broken down by category and month. kinda like a tiny little pivot chart??
 
 Add queries from pivot table.
 
