@@ -126,22 +126,9 @@ public class ExpenseController {
         return "expenses/showExpenses";
     }
 
-    @RequestMapping(value = "/plot", method = RequestMethod.GET)
+    @GetMapping("/plot")
     public String getDataPlot(ModelMap model) {
-
-        Object[][] pieData = new Object[3][2];
-
-        pieData[0][0] = "Task";
-        pieData[0][1] = "Hours";
-
-        pieData[1][0] = "Panda";
-        pieData[1][1] = 7;
-
-        pieData[2][0] = "Fanda";
-        pieData[2][1] = 4;
-
-        model.addAttribute("pieData",pieData);
-
+        model.addAttribute("pieData", expenseService.getCategoryTotalsPerMonth());
         return "googlechart";
     }
 }

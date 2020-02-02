@@ -11,4 +11,6 @@ public interface ExpenseService extends CrudService<Expense, Long> {
     Set<Expense> findByCategory(Category category);
 
     List<Expense> findAllOrdered();
+
+    Object[][] getCategoryTotalsPerMonth();
 }
