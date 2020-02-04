@@ -47,7 +47,7 @@
         </div>
     </form>
 
-    <div id="piechart"> </div>
+    <div id="piechart" style="float: left"> </div>
 
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script type="text/javascript" th:inline="javascript">
@@ -59,7 +59,12 @@
         function drawChart() {
             var piedata = /*[[${pieData}]]*/ 'default';
             var data = google.visualization.arrayToDataTable(piedata);
-            var options = {'title': 'Expense breakdown', 'width': 550, 'height': 400, 'is3D': true, 'backgroundColor': 'transparent'};
+            var options = {
+                'title': 'Expense breakdown',
+                'is3D': true,
+                'backgroundColor': 'transparent',
+                chartArea:{left:0,top:0,width:"100%",height:"100%"}
+            };
             var formatter = new google.visualization.NumberFormat({decimalSymbol: '.', prefix: '£'});
             formatter.format(data,1);
 

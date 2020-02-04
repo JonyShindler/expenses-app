@@ -1,6 +1,7 @@
 package berkeley.creations.expenses.service.jpa;
 
 import berkeley.creations.expenses.model.Category;
+import berkeley.creations.expenses.model.CategoryTotal;
 import berkeley.creations.expenses.model.Expense;
 import berkeley.creations.expenses.repository.ExpenseRepository;
 import berkeley.creations.expenses.service.ExpenseService;
@@ -60,14 +61,19 @@ public class ExpenseJPAService implements ExpenseService {
     }
 
     @Override
-    public Object[][] getCategoryTotalsPerMonth() {
+    public Object[][] getTotalsPerCategoryForPieChart(List<Expense> expenses) {
 
         //TODO really this should just be only positive expensses, then we cna have a seperate one for inbound money?
         //TODO also would be nice to sort the values largest to smallest.
 
+        expenses.removeIf((e -> e.getQuantity().compareTo(BigDecimal.ZERO)<0));
+
         //This needs to return an array of Category to total
-        Map<Category, BigDecimal> categoryTotalsMap = PivotTableService.sumExpensesByCategoryForMonth(findAllOrdered());
-        categoryTotalsMap.entrySet().removeIf((e -> e.getValue().compareTo(BigDecimal.ZERO)<0));
+        Map<Category, BigDecimal> categoryTotalsMap = PivotTableService.sumExpensesByCategoryForMonth(expenses);
+
+        List<CategoryTotal> categoryTotals =
+                categoryTotalsMap.entrySet().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
+                        .map(e -> new CategoryTotal(e.getKey(), e.getValue())).collect(Collectors.toList());
 
         int numberOfKeys = categoryTotalsMap.keySet().size();
         Object[][] pieData = new Object[numberOfKeys+1][2];
@@ -76,9 +82,9 @@ public class ExpenseJPAService implements ExpenseService {
         pieData[0][1] = "Total spent";
 
         int i = 1;
-        for (Map.Entry<Category, BigDecimal> entry : categoryTotalsMap.entrySet()) {
-            pieData[i][0] = entry.getKey().getName();
-            pieData[i][1] = entry.getValue();
+        for (CategoryTotal total : categoryTotals) {
+            pieData[i][0] = total.getCategory().getName() + ": £" + total.getTotal().toString();
+            pieData[i][1] = total.getTotal();
             i ++;
         }
 

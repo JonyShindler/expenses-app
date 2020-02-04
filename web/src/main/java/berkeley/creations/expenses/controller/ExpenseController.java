@@ -16,11 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.servlet.support.RequestContextUtils;
-import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.Month;
 import java.time.Year;
@@ -71,7 +69,7 @@ public class ExpenseController {
 
         List<Expense> expenses = queryService.queryExpenses(query);
         model.addAttribute("expenses", expenses);
-        model.addAttribute("pieData", expenseService.getCategoryTotalsPerMonth());
+        model.addAttribute("pieData", expenseService.getTotalsPerCategoryForPieChart(expenses));
 
         ModelAndView mav = new ModelAndView("expenses/showExpenses");
         mav.addObject("query", query);
@@ -173,7 +171,7 @@ public class ExpenseController {
 
     @GetMapping("/plot")
     public String getDataPlot(ModelMap model) {
-        model.addAttribute("pieData", expenseService.getCategoryTotalsPerMonth());
+        model.addAttribute("pieData", expenseService.getTotalsPerCategoryForPieChart(expenseService.findAllOrdered()));
         return "googlechart";
     }
 }
