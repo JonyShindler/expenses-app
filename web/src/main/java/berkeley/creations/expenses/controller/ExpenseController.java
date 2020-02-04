@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.io.IOException;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Comparator;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RequestMapping()
@@ -42,6 +42,7 @@ public class ExpenseController {
     public String showAllExpenses(Model model) {
         List<Expense> expenses = expenseService.findAllOrdered();
         model.addAttribute("expenses", expenses);
+        model.addAttribute("pieData", expenseService.getCategoryTotalsPerMonth());
         model.addAttribute("query", new Query());
 
         return "expenses/showExpenses";
@@ -55,7 +56,7 @@ public class ExpenseController {
     }
 
     @InitBinder("/expenses/expense")
-    public void initOwnerBinder(WebDataBinder binder) {
+    public void initExpenseBinder(WebDataBinder binder) {
         binder.setDisallowedFields("id");
     }
 
@@ -88,13 +89,13 @@ public class ExpenseController {
 
 
     @GetMapping("/expenses/{expenseId}/edit")
-    public String initUpdateOwnerForm(@PathVariable Long expenseId, Model model) {
+    public String initUpdateExpenseForm(@PathVariable Long expenseId, Model model) {
         model.addAttribute(expenseService.findById(expenseId));
         return EXPENSES_CREATE_OR_UPDATE_EXPENSE_FORM;
     }
 
     @PostMapping("/expenses/{expenseId}/edit")
-    public String processUpdateOwnerForm(@Valid Expense expense, BindingResult result, @PathVariable Long expenseId) {
+    public String processUpdateExpenseForm(@Valid Expense expense, BindingResult result, @PathVariable Long expenseId) {
         if (result.hasErrors()) {
             return EXPENSES_CREATE_OR_UPDATE_EXPENSE_FORM;
         } else {
