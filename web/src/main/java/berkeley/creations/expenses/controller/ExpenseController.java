@@ -14,11 +14,17 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
+import org.springframework.web.servlet.view.RedirectView;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.IOException;
 import java.time.LocalDate;
-import java.util.Comparator;
-import java.util.List;
+import java.time.Month;
+import java.time.Year;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RequestMapping()
@@ -37,15 +43,40 @@ public class ExpenseController {
         this.queryService = queryService;
     }
 
-
     @GetMapping("/expenses")
-    public String showAllExpenses(Model model) {
-        List<Expense> expenses = expenseService.findAllOrdered();
+    public ModelAndView queryExpenses(Model model, HttpServletRequest request) {
+        Map<String, ?> inputFlashMap = RequestContextUtils.getInputFlashMap(request);
+        Query.QueryBuilder queryBuilder = Query.builder();
+
+        if (inputFlashMap != null) {
+
+            String category = (String) inputFlashMap.get("category");
+            if (category != null) {
+                queryBuilder.category(categoryService.findByName(category));
+            }
+
+            String month = (String) inputFlashMap.get("month");
+            if (month != null) {
+                queryBuilder.month(Month.valueOf(month));
+            }
+
+            String year = (String) inputFlashMap.get("year");
+            if (year != null) {
+                queryBuilder.year(Year.parse(year));
+            }
+        }
+
+        Query query = queryBuilder.build();
+        model.addAttribute("query", query);
+
+        List<Expense> expenses = queryService.queryExpenses(query);
         model.addAttribute("expenses", expenses);
         model.addAttribute("pieData", expenseService.getCategoryTotalsPerMonth());
-        model.addAttribute("query", new Query());
 
-        return "expenses/showExpenses";
+        ModelAndView mav = new ModelAndView("expenses/showExpenses");
+        mav.addObject("query", query);
+
+        return mav;
     }
 
     @GetMapping("/expenses/{expenseId}")
@@ -111,12 +142,25 @@ public class ExpenseController {
     }
 
 
-    @PostMapping(value = "/expenses", params = "action=Query")
-    public String processQuery(Query query, Model model) {
+    @PostMapping(value = "/expenses")
+    public String processQuery(@ModelAttribute Query query, RedirectAttributes attributes) {
+        Category category = query.getCategory();
+        Year year = query.getYear();
+        Month month = query.getMonth();
 
-        List<Expense> expenses = queryService.queryExpenses(query);
-        model.addAttribute("expenses", expenses);
-        return "expenses/showExpenses";
+        if (category != null) {
+            attributes.addFlashAttribute("category", category.toString());
+        }
+
+        if (year != null) {
+            attributes.addFlashAttribute("year", year.toString());
+        }
+
+        if (month != null) {
+            attributes.addFlashAttribute("month", month.toString());
+        }
+
+        return "redirect:/expenses";
     }
 
     @PostMapping(value = "/expenses", params = "action=Reset")

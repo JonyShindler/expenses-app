@@ -38,18 +38,13 @@
 
 <div style="width: 40%; float: right">
     <h2>Query Expenses</h2>
-    <form th:object="${query}" class="form-horizontal" id="query-expense-form" method="post" action="#">
+    <form th:object="${query}" class="form-horizontal" id="query-expense-form" method="post">
         <div class="form-group has-feedback">
-            <input th:replace="~{fragments/selectField :: select ('Category', 'category', ${categories}, true, true)}" />
+            <input th:replace="~{fragments/selectField :: select ('Category', 'category', ${categories}, false, true)}" />
             <input th:replace="~{fragments/selectField :: select ('Month', 'month', ${T(java.time.Month).values()}, false, true)}" />
             <input th:replace="~{fragments/selectField :: select ('Year', 'year', ${years}, false, true)}" />
-        </div>
-
-        <div class="form-inline" >
             <input class="btn btn-default" name = "action" value = "Query" type="submit">
-            <input class="btn btn-default" name = "action" value = "Reset" type="submit">
         </div>
-
     </form>
 
     <div id="piechart"> </div>
